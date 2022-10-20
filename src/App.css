@@ -18,6 +18,12 @@ label {
   text-align: center;
 }
 
-input[type="radio"]:checked + label {
+input:checked + label {
   background-color: #a91414;
 }
+
+/* [type="radio"] */
+
+/* .green {
+  background-color: aqua;
+} */
