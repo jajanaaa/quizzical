@@ -4,7 +4,7 @@
   height: 500px;
 }
 
-input[type="radio"] {
+/* input[type="radio"] {
   display: none;
 }
 
@@ -20,10 +20,14 @@ label {
 
 input:checked + label {
   background-color: #a91414;
-}
+} */
 
 /* [type="radio"] */
 
-/* .green {
+input:checked + label {
+  background-color: rgb(105, 120, 183);
+}
+
+input.green + label {
   background-color: aqua;
-} */
+}
