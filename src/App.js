@@ -1,115 +1,67 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import QuestionBlock from "./QuestionBlock";
-// import { v4 as uuidv4 } from "uuid";
-
-// function App() {
-//   const [questions, setQuestions] = useState([]); // questions its array of 5 objects
-//   const [choosedAnswer, setChoosedAnswer] = useState({});
-
-//   function showQuestions(response) {
-//     setQuestions(response.data.results);
-//   }
-
-//   function chooseAnswer(event) {
-//     console.log(event.target.checked);
-//     // setChoosedAnswer((prevAnswer) => ({
-//     //   ...prevAnswer,
-//     //   [event.target.name]: event.target.value,
-//     // }));
-//     setChoosedAnswer({
-//       [event.target.name]: event.target.value,
-//       isChoosen: event.target.checked,
-//     });
-//   }
-//   const newQuestions = questions.map((question) => {
-//     return (
-//       <>
-//         <QuestionBlock
-//           question={question.question}
-//           correct={question.correct_answer}
-//           incorrect={question.incorrect_answers}
-//           id={uuidv4()}
-//           key={uuidv4()}
-//           fun={chooseAnswer}
-//           name={questions.indexOf(question)}
-//           checked={choosedAnswer.isChoosen}
-//         />
-//         <hr />
-//       </>
-//     );
-//   });
-
-//   useEffect(() => {
-//     axios
-//       .get("https://opentdb.com/api.php?amount=5&type=multiple")
-//       .then(showQuestions);
-//   }, []);
-
-//   return (
-//     <div className="App">
-//       <>{newQuestions}</>
-//       <button>Check answers</button>
-//     </div>
-//   );
-// }
-
-// export default App;
-
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import QuestionBlock from "./QuestionBlock";
+import { nanoid } from "nanoid";
 
 function App() {
   const [results, setResults] = useState([]);
+  const [checked, setChecked] = useState(false);
+
+  // MAKE API CALL
+  function getResults(response) {
+    let newArray = [];
+    response.data.results.map((result) => {
+      newArray.push({
+        id: nanoid(),
+        answers: result.incorrect_answers.concat([result.correct_answer]),
+        question: result.question,
+        correct: result.correct_answer,
+        selected: null,
+        checked: false,
+      });
+    });
+    setResults(newArray);
+  }
 
   useEffect(() => {
     axios
       .get("https://opentdb.com/api.php?amount=5&type=multiple")
-      .then((response) => setResults(response.data.results));
+      .then(getResults);
   }, []);
-  //
-  const [choseAnswers, setChoseAnswers] = useState([{}]);
 
-  function checkAnswers() {
-    const correct = results.map((result) => result.correct_answer);
-
-    for (let i = 0; i < correct.length; i++) {
-      if (
-        choseAnswers.value === correct[i] &&
-        choseAnswers.isChecked === true
-      ) {
-        console.log("Correct!");
-        setChoseAnswers((prevAnswer) => ({
-          ...prevAnswer,
-          isCorrect: true,
-        }));
-      } else console.log("Wrong");
-    }
+  function handleCheck() {
+    setResults((results) =>
+      results.map((result) => {
+        return { ...result, checked: true };
+      })
+    );
+    setChecked(true);
   }
 
-  function handleChange(event) {
-    setChoseAnswers((prevAnswer) => ({
-      ...prevAnswer,
-      value: event.target.value,
-      isChecked: event.target.checked,
-    }));
+  function handleClick(id, answer) {
+    setResults((results) =>
+      results.map((result) => {
+        return result.id === id
+          ? {
+              ...result,
+              selected: answer,
+            }
+          : result;
+      })
+    );
   }
 
-  //
-  const renderedResults = results.map((result) => {
+  const questionBlock = results.map((result) => {
     return (
       <>
         <QuestionBlock
+          key={result.id}
           question={result.question}
-          answers={result.incorrect_answers
-            .concat([result.correct_answer])
-            .sort(() => 0.5 - Math.random())}
-          correct={result.correct_answer}
-          name={results.indexOf(result)}
-          fun={handleChange}
-          isCorrect={choseAnswers.isCorrect}
+          answers={result.answers}
+          handleClick={handleClick}
+          id={result.id}
+          q={result}
         />
         <hr />
       </>
@@ -117,11 +69,10 @@ function App() {
   });
 
   return (
-    <div className="App">
-      {renderedResults}
-      <button onClick={checkAnswers}>Check</button>
+    <div>
+      {questionBlock}
+      {<button onClick={handleCheck}>Check</button>}
     </div>
   );
 }
-
 export default App;
