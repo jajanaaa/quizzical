@@ -9,13 +9,16 @@ function App() {
   const [checked, setChecked] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
   const [wantPlayAgain, setWantPlayAgain] = useState(0);
+
   // MAKE API CALL
   function getResults(response) {
     let newArray = [];
     response.data.results.map((result) => {
       return newArray.push({
         id: nanoid(),
-        answers: result.incorrect_answers.concat([result.correct_answer]),
+        answers: result.incorrect_answers
+          .concat([result.correct_answer])
+          .sort(() => Math.random() - 0.5),
         question: result.question,
         correct: result.correct_answer,
         selected: null,
