@@ -13,7 +13,7 @@ function App() {
   function getResults(response) {
     let newArray = [];
     response.data.results.map((result) => {
-      newArray.push({
+      return newArray.push({
         id: nanoid(),
         answers: result.incorrect_answers.concat([result.correct_answer]),
         question: result.question,
@@ -43,6 +43,7 @@ function App() {
       if (result.correct === result.selected) {
         setCorrectCount((prevCount) => prevCount + 1);
       }
+      return result;
     });
   }
 
