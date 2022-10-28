@@ -7,7 +7,8 @@ import { nanoid } from "nanoid";
 function App() {
   const [results, setResults] = useState([]);
   const [checked, setChecked] = useState(false);
-
+  const [correctCount, setCorrectCount] = useState(0);
+  const [wantPlayAgain, setWantPlayAgain] = useState(0);
   // MAKE API CALL
   function getResults(response) {
     let newArray = [];
@@ -28,7 +29,7 @@ function App() {
     axios
       .get("https://opentdb.com/api.php?amount=5&type=multiple")
       .then(getResults);
-  }, []);
+  }, [wantPlayAgain]);
 
   function handleCheck() {
     setResults((results) =>
@@ -37,6 +38,12 @@ function App() {
       })
     );
     setChecked(true);
+
+    results.map((result) => {
+      if (result.correct === result.selected) {
+        setCorrectCount((prevCount) => prevCount + 1);
+      }
+    });
   }
 
   function handleClick(id, answer) {
@@ -54,24 +61,45 @@ function App() {
 
   const questionBlock = results.map((result) => {
     return (
-      <>
+      <div key={result.id}>
         <QuestionBlock
+          // key={nanoid()}
           key={result.id}
           question={result.question}
           answers={result.answers}
           handleClick={handleClick}
           id={result.id}
           q={result}
+          checked={checked}
         />
-        <hr />
-      </>
+      </div>
     );
   });
 
+  function playAgain() {
+    setChecked(false);
+    setCorrectCount(0);
+    setWantPlayAgain((prevCount) => prevCount + 1);
+  }
+
   return (
-    <div>
+    <div className="App">
       {questionBlock}
-      {<button onClick={handleCheck}>Check</button>}
+      {checked && (
+        <div className="finishedGame">
+          <span className="scoreText">
+            You scored {correctCount}/5 correct answers
+          </span>
+          <button onClick={playAgain} className="playAgain">
+            Play again
+          </button>
+        </div>
+      )}
+      {!checked && (
+        <button onClick={handleCheck} className="checkButton">
+          Check answers
+        </button>
+      )}
     </div>
   );
 }

@@ -2,3 +2,20 @@
 
 /* font-family: 'Inter', sans-serif; 500, 600
 font-family: 'Karla', sans-serif; 700*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 10px 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
