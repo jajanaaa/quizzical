@@ -13,34 +13,11 @@ body {
   padding: 30px 0;
 }
 
-.App {
-  background-color: #f5f7fb;
-  width: 550px;
-  min-height: 500px;
-  padding: 30px 50px;
-  border-radius: 6px;
-  background-image: url("./images/blobs-1.png"), url("./images/blobs-2.png");
-  background-repeat: no-repeat;
-  background-position: top -150px right -100px, bottom -70px left -70px;
-}
-
-#correct {
-  background-color: #94d7a2;
-  border: none;
-}
-
-#incorrect {
-  background-color: #f8bcbc;
-  border: none;
-  color: #8f94af;
-}
-
-#notSelected {
-  border: 0.7px solid #8f94af;
-  color: #8f94af;
-}
-
 .Menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 550px;
   height: 93vh;
   border-radius: 6px;
@@ -48,13 +25,6 @@ body {
   background-repeat: no-repeat;
   background-position: top -100px right -100px, bottom -100px left -100px;
   background-color: #f5f7fb;
-}
-
-.Menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .Menu h1 {
@@ -91,40 +61,22 @@ body {
   cursor: pointer;
 }
 
-.QuestionBlock p {
-  font-family: "Karla";
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  color: #293264;
-  margin: 15px 0 12px 0;
-}
-.QuestionBlock {
-  border-bottom: 0.7px solid #dbdef0;
-}
-.button {
-  background-color: transparent;
-  border: 0.7px solid #4d5b9e;
-  border-radius: 8px;
-  padding: 4px 20px;
-  margin: 0 13px 13px 0;
-  color: #293264;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10.24px;
-  line-height: 12px;
-  /* identical to box height */
-
-  text-align: center;
-  cursor: pointer;
+.Menu button:hover {
+  background: #3d4d9c;
 }
 
-.selected {
-  background-color: #d6dbf5;
+.App {
+  width: 550px;
+  min-height: 500px;
+  padding: 30px 50px;
+  border-radius: 6px;
+  background-image: url("./images/blobs-1.png"), url("./images/blobs-2.png");
+  background-repeat: no-repeat;
+  background-color: #f5f7fb;
+  background-position: top -150px right -100px, bottom -70px left -70px;
 }
 
-.checkButton {
+.App .checkButton {
   display: block;
   background: #4d5b9e;
   border-radius: 10px;
@@ -136,42 +88,97 @@ body {
   color: #f5f7fb;
   border: none;
   padding: 12px 22px;
-  margin: 0 auto;
+  margin: 20px auto 0 auto;
   white-space: nowrap;
-  margin-top: 20px;
   cursor: pointer;
 }
 
-.scoreText {
+.App .checkButton:hover {
+  background: #3d4d9c;
+}
+
+.App .scoreText {
   font-family: "Inter";
-  font-style: normal;
   font-weight: 700;
-  font-size: 12.8px;
+  font-size: 13px;
   line-height: 15px;
   text-align: center;
   color: #293264;
-  margin-right: 13px;
-  margin-bottom: 13px;
+  margin: 0 13px 13px 0;
 }
 
-.playAgain {
+.App .playAgain {
   background: #4d5b9e;
   border-radius: 10px;
   font-family: "Inter";
-  font-style: normal;
   font-weight: 600;
-  font-size: 10.24px;
+  font-size: 10px;
   line-height: 12px;
   text-align: center;
   color: #f5f7fb;
   padding: 9px 20px;
   border: none;
-  cursor: pointer;
   margin-top: 13px;
+  cursor: pointer;
+}
+
+.App .playAgain:hover {
+  background: #3d4d9c;
 }
 
 .App .finishedGame {
   margin-top: 20px;
+}
+
+.QuestionBlock {
+  border-bottom: 0.7px solid #dbdef0;
+}
+
+.QuestionBlock p {
+  font-family: "Karla";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #293264;
+  margin: 15px 0 12px 0;
+}
+
+.QuestionBlock .button {
+  border: 0.7px solid #4d5b9e;
+  border-radius: 8px;
+  padding: 4px 20px;
+  margin: 0 13px 13px 0;
+  color: #293264;
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.QuestionBlock .button:hover {
+  background-color: #d6dbf5;
+}
+
+.selected {
+  background-color: #d6dbf5;
+}
+
+#correct {
+  background-color: #94d7a2;
+  border: none;
+}
+
+#incorrect {
+  background-color: #f8bcbc;
+  border: none;
+  color: #8f94af;
+}
+
+#notSelected {
+  border: 0.7px solid #8f94af;
+  color: #8f94af;
 }
 
 @media screen and (max-width: 480px) {
