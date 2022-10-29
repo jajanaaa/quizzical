@@ -1,24 +1,19 @@
 import React, { useState } from "react";
 import App from "./App";
-import "./App.css";
+import "./index.css";
 
 function Menu() {
-  const [gameStart, setGameStart] = useState(false);
-
-  function startGame() {
-    setGameStart(true);
-  }
+  const [startGame, setStartGame] = useState(false);
   return (
     <>
-      {!gameStart && (
+      {!startGame && (
         <div className="Menu">
           <h1>Quizzical</h1>
           <p>Are you ready to challenge yourself?</p>
-          <button onClick={startGame}>Start Quiz</button>
+          <button onClick={() => setStartGame(true)}>Start Quiz</button>
         </div>
       )}
-
-      {gameStart && <App />}
+      {startGame && <App />}
     </>
   );
 }

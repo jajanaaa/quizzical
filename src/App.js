@@ -1,20 +1,27 @@
-import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import "./index.css";
 import axios from "axios";
-import QuestionBlock from "./QuestionBlock";
 import { nanoid } from "nanoid";
+import QuestionBlock from "./QuestionBlock";
 
 function App() {
   const [results, setResults] = useState([]);
-  const [checked, setChecked] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
   const [wantPlayAgain, setWantPlayAgain] = useState(0);
 
   // MAKE API CALL
+  useEffect(() => {
+    axios
+      .get("https://opentdb.com/api.php?amount=5&type=multiple")
+      .then(getResults);
+  }, [wantPlayAgain]);
+
+  // RENDER API CALL RESULTS
   function getResults(response) {
-    let newArray = [];
+    let resultsArray = [];
     response.data.results.map((result) => {
-      return newArray.push({
+      return resultsArray.push({
         id: nanoid(),
         answers: result.incorrect_answers
           .concat([result.correct_answer])
@@ -22,34 +29,29 @@ function App() {
         question: result.question,
         correct: result.correct_answer,
         selected: null,
-        checked: false,
+        gameOver: false,
       });
     });
-    setResults(newArray);
+    setResults(resultsArray);
   }
 
-  useEffect(() => {
-    axios
-      .get("https://opentdb.com/api.php?amount=5&type=multiple")
-      .then(getResults);
-  }, [wantPlayAgain]);
-
-  function handleCheck() {
-    setResults((results) =>
-      results.map((result) => {
-        return { ...result, checked: true };
-      })
+  // RENDER QUESTION BLOCK
+  const questionBlock = results.map((result) => {
+    return (
+      <div key={result.id}>
+        <QuestionBlock
+          question={result.question}
+          answers={result.answers}
+          id={result.id}
+          result={result}
+          handleClick={handleClick}
+          gameOver={gameOver}
+        />
+      </div>
     );
-    setChecked(true);
+  });
 
-    results.map((result) => {
-      if (result.correct === result.selected) {
-        setCorrectCount((prevCount) => prevCount + 1);
-      }
-      return result;
-    });
-  }
-
+  // SELECT ANSWER
   function handleClick(id, answer) {
     setResults((results) =>
       results.map((result) => {
@@ -63,33 +65,40 @@ function App() {
     );
   }
 
-  const questionBlock = results.map((result) => {
-    return (
-      <div key={result.id}>
-        <QuestionBlock
-          // key={nanoid()}
-          key={result.id}
-          question={result.question}
-          answers={result.answers}
-          handleClick={handleClick}
-          id={result.id}
-          q={result}
-          checked={checked}
-        />
-      </div>
+  // CHECK ANSWERS
+  function handleCheck() {
+    setResults((results) =>
+      results.map((result) => {
+        return { ...result, gameOver: true };
+      })
     );
-  });
+    setGameOver(true);
 
+    // INCREMENT COUNT IF ANSWER IS CORRECT
+    results.map((result) => {
+      if (result.correct === result.selected) {
+        setCorrectCount((prevCount) => prevCount + 1);
+      }
+      return correctCount;
+    });
+  }
+
+  // PLAY AGAIN FUNCTION
   function playAgain() {
-    setChecked(false);
+    setGameOver(false);
     setCorrectCount(0);
-    setWantPlayAgain((prevCount) => prevCount + 1);
+    setWantPlayAgain((prevGame) => prevGame + 1);
   }
 
   return (
     <div className="App">
       {questionBlock}
-      {checked && (
+      {!gameOver && (
+        <button onClick={handleCheck} className="checkButton">
+          Check answers
+        </button>
+      )}
+      {gameOver && (
         <div className="finishedGame">
           <span className="scoreText">
             You scored {correctCount}/5 correct answers
@@ -99,12 +108,8 @@ function App() {
           </button>
         </div>
       )}
-      {!checked && (
-        <button onClick={handleCheck} className="checkButton">
-          Check answers
-        </button>
-      )}
     </div>
   );
 }
+
 export default App;

@@ -8,50 +8,34 @@ function QuestionBlock(props) {
 
   const renderAnswers = props.answers.map((answer) => {
     let id = null;
-
-    if (props.checked) {
-      if (props.q.checked) {
-        if (props.q.correct === answer) {
-          id = "correct";
-        } else if (props.q.selected === answer) {
-          id = "incorrect";
-        } else {
-          id = "not-selected";
-        }
+    if (props.result.gameOver) {
+      if (props.result.correct === answer) {
+        id = "correct";
+      } else if (props.result.selected === answer) {
+        id = "incorrect";
+      } else {
+        id = "notSelected";
       }
     }
+
     return (
       <button
         key={nanoid()}
         id={id}
-        className={`button ${answer === props.q.selected ? "selected" : ""}`}
+        className={`button ${
+          answer === props.result.selected ? "selected" : ""
+        }`}
         onClick={() => handleClick(answer)}
       >
         {parse(`${answer}`)}
       </button>
-      // <span key={answer} className="button">
-      //   <input
-      //     type="radio"
-      //     id={JSON.stringify(answer)}
-      //     name={props.id}
-      //     value={answer}
-      //     className={id}
-      //     // onChange={() => handleClick(answer)}
-      //     onChange={() => handleClick(answer)}
-      //     // className="radioButtons"
-      //   />
-      //   {parse(
-      //     `<label htmlFor=${JSON.stringify(
-      //       answer
-      //     )} className="btn btn-default" >${answer}</label>`
-      //   )}
-      // </span>
     );
   });
+
   return (
     <div className="QuestionBlock">
       {parse(`<p>${props.question}</p>`)}
-      <div className="buttonsBlock">{renderAnswers}</div>
+      {renderAnswers}
     </div>
   );
 }
