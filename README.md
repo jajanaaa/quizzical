@@ -4,7 +4,6 @@
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
 
 ### Overview
 This is a pet project from Scrimba React Course. It's a practice of useState() and useEffect(), making API calls with Axios, mapping through arrays, creating onClick events, conditionally rendering components, and adding CSS classes. The project is a quiz that makes a call to Trivia API and displays 5 random questions and 4 answer options, afterward, the answers are checked and incorrect are displayed in red and corrects in green. A player can see a score of correct answers and start a new game.
