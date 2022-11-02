@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600&family=Karla:wght@700&display=swap");
+
+$almostWhite: #f5f7fb;
+$textColor: #293264;
+$buttonBackground: #4d5b9e;
+$buttonHover: #3d4d9c;
+$lightGrey: #d6dbf5;
+$grey: #8f94af;
+$green: #94d7a2;
+$red: #f8bcbc;
+
+@mixin flexCenter($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  @include flexCenter(row);
+  padding: 30px 0;
+}
+
+.Menu {
+  @include flexCenter(column);
+  width: 550px;
+  height: 93vh;
+  border-radius: 6px;
+  background-image: url("../images/blobs-1.png"), url("../images/blobs-2.png");
+  background-repeat: no-repeat;
+  background-position: top -100px right -100px, bottom -100px left -100px;
+  background-color: $almostWhite;
+  h1 {
+    font-family: "Karla";
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 37px;
+    text-align: center;
+    color: $textColor;
+  }
+  p {
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: $textColor;
+    margin: 20px;
+  }
+  button {
+    background: $buttonBackground;
+    border-radius: 15px;
+    width: 193px;
+    height: 52px;
+    font-family: "Inter";
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: $almostWhite;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      background: $buttonHover;
+    }
+  }
+}
+
+.App {
+  width: 550px;
+  min-height: 500px;
+  padding: 30px 50px;
+  border-radius: 6px;
+  background-image: url("../images/blobs-1.png"), url("../images/blobs-2.png");
+  background-repeat: no-repeat;
+  background-color: $almostWhite;
+  background-position: top -150px right -100px, bottom -70px left -70px;
+  .checkButton {
+    display: block;
+    background: $buttonBackground;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+    color: $almostWhite;
+    border: none;
+    padding: 12px 22px;
+    margin: 20px auto 0 auto;
+    white-space: nowrap;
+    cursor: pointer;
+    &:hover {
+      background: $buttonHover;
+    }
+  }
+  .scoreText {
+    font-family: "Inter";
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 15px;
+    text-align: center;
+    color: $textColor;
+    margin: 0 13px 13px 0;
+  }
+  .playAgain {
+    background: $buttonBackground;
+    border-radius: 10px;
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+    color: $almostWhite;
+    padding: 9px 20px;
+    border: none;
+    margin-top: 13px;
+    cursor: pointer;
+    &:hover {
+      background: $buttonHover;
+    }
+  }
+  .finishedGame {
+    margin-top: 20px;
+  }
+}
+
+.QuestionBlock {
+  border-bottom: 0.7px solid $lightGrey;
+  p {
+    font-family: "Karla";
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: $textColor;
+    margin: 15px 0 12px 0;
+  }
+  .button {
+    border: 0.7px solid $buttonBackground;
+    border-radius: 8px;
+    padding: 4px 20px;
+    margin: 0 13px 13px 0;
+    color: $textColor;
+    font-family: "Inter";
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+    cursor: pointer;
+    &:hover {
+      background-color: $lightGrey;
+    }
+  }
+  .selected {
+    background-color: $lightGrey;
+  }
+
+  #correct {
+    background-color: $green;
+    border: none;
+  }
+
+  #incorrect {
+    background-color: $red;
+    border: none;
+    color: $grey;
+  }
+
+  #notSelected {
+    border: 0.7px solid $grey;
+    color: $grey;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .Menu {
+    width: 90vw;
+  }
+  .App {
+    width: 90vw;
+  }
+  .button {
+    margin: 0 10px 10px 0;
+  }
+}

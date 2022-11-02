@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./index.css";
+import "./styles/index.css";
 import axios from "axios";
 import { nanoid } from "nanoid";
 import QuestionBlock from "./QuestionBlock";
